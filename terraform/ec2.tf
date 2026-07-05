@@ -9,7 +9,7 @@ resource "aws_security_group" "k8s_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["0.0.0.0/0"] # 
   }
 
   # HTTP (Web traffic)
@@ -39,14 +39,14 @@ resource "aws_security_group" "k8s_sg" {
 
 # EC2 Instance
 resource "aws_instance" "k8s_server" {
-  ami                    = "ami-060e277acade9e1d9" # Ubuntu 22.04 LTS AMI ID 
-  instance_type          = "t3.medium" # 2 vCPU, 4GB RAM 
+  ami                    = "ami-0532913178263be11" # Ubuntu 22.04 LTS AMI ID 
+  instance_type          = "t3.micro" # 2 vCPU, 4GB RAM 
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.k8s_sg.id]
-  key_name               = "your-aws-key-pair-name" 
+  key_name               = "admin"
 
   root_block_device {
-    volume_size = 20
+    volume_size = 8
     volume_type = "gp3"
   }
 
