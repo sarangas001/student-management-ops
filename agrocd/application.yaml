@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/sarangasl/student-management-ops' 
+    repoURL: 'https://github.com/sarangas001/student-management-ops' 
     targetRevision: HEAD
     path: k8s 
   destination:
