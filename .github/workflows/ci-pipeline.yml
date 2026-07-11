@@ -1,9 +1,11 @@
 name: Student Management System CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main # main branch push
+    
 
 jobs:
   build-and-push:
