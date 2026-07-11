@@ -18,6 +18,17 @@ spec:
         image: sarangasl/sms-server:latest 
         ports:
         - containerPort: 3001
+      
+      # 1. මුලින්ම මුළු .env එකම එක පාර load කරනවා
+      envFrom:
+        - secretRef:
+            name: sms-backend-env
+
+      env:
+        - name: NODE_ENV
+          value: "production" # Cluster එකේ දුවද්දී production දාන එක හොඳයි
+        - name: CLIENT_URL
+          value: "http://localhost"
 ---
 apiVersion: v1
 kind: Service
