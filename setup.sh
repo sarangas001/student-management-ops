@@ -6,13 +6,13 @@ echo " Student Management System Setup "
 echo "================================="
 
 # Verify directories
-if [ ! -d "server" ]; then
-    echo "❌ server directory not found!"
+if [ ! -d "backend" ]; then
+    echo "❌ backend directory not found!"
     exit 1
 fi
 
-if [ ! -d "client" ]; then
-    echo "❌ client directory not found!"
+if [ ! -d "frontend" ]; then
+    echo "❌ frontend directory not found!"
     exit 1
 fi
 
@@ -36,8 +36,8 @@ fi
 echo ""
 echo "✅ Generated a cryptographically secure JWT_SECRET."
 
-# Create Server .env
-cat > server/.env << EOF
+# Create Backend .env
+cat > backend/.env << EOF
 PORT=3001
 CLIENT_URL=http://localhost:5173
 NODE_ENV=development
@@ -48,8 +48,8 @@ GEMINI_API_KEY=${GEMINI_API_KEY}
 GEMINI_MODEL=gemini-2.5-flash
 EOF
 
-# Create Client .env
-cat > client/.env << EOF
+# Create Frontend .env
+cat > frontend/.env << EOF
 VITE_BACKEND_URL=http://localhost:3001
 EOF
 

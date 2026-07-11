@@ -2,15 +2,15 @@ version: '3.9'
 
 services:
   ministack:
-    image: ministackorg/ministack:latest  # හරියටම MiniStack image එක ගනිමු
+    image: ministackorg/ministack:latest  
     container_name: ministack_aws
     ports:
-      - "4566:4566"                    # MiniStack එකේ main edge port එක (සියලුම AWS endpoints මේකට map වෙන්නේ)
+      - "4566:4566"                    
     environment:
-      - SERVICES=ec2,s3,route53,acm    # අපේ Student Management System එකට ඕන කරන services විතරක් active කරගන්නවා
+      - SERVICES=ec2,s3,route53,acm    
       - DEFAULT_REGION=us-east-1
     volumes:
-      - "./ministack_data:/data"       # Data persistent වෙන්න path එකක් දෙමු
+      - "./ministack_data:/data"       
 
 
 
