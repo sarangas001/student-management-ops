@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: sarangasl/sms-server:latest 
+        image: sarangasl/sms-backend:latest 
         ports:
         - containerPort: 3001
       

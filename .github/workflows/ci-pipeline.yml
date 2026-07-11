@@ -25,14 +25,14 @@ jobs:
     - name: Build and Push Backend
       uses: docker/build-push-action@v4
       with:
-        context: ./server
+        context: ./backend
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/sms-server:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/sms-backend:latest
 
     # 2. Frontend Image එක Build කරලා Push කිරීම
     - name: Build and Push Frontend
       uses: docker/build-push-action@v4
       with:
-        context: ./client
+        context: ./frontend
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/sms-client:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/sms-frontend:latest

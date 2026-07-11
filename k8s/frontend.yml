@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: sarangasl/sms-client:latest 
+        image: sarangasl/sms-frontend:latest 
         ports:
         - containerPort: 80
 ---
