@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  ministack:
+    image: ministackorg/ministack:latest
+    container_name: ministack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,acm,route53,vpc,ec2,ecr,iam,sts,cloudformation
+      - DEBUG=0
+      - PERSIST_STATE=1
+    volumes:
+      - ministack-data:/var/lib/ministack
+      - /var/run/docker.sock:/var/run/docker.sock  # ECS/EKS වගේ real-container services සඳහා
+
+volumes:
+  ministack-data:
