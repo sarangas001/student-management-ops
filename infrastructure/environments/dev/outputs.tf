@@ -17,3 +17,7 @@ output "route53_name_servers" {
 output "acm_certificate_arn" {
   value = module.acm.certificate_arn
 }
+
+output "ecr_repository_urls" {
+  value = module.ecr.repository_urls
+}

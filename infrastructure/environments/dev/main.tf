@@ -22,3 +22,9 @@ module "acm" {
   route53_zone_id = module.route53.zone_id
   project_name    = "student-mgmt"
 }
+
+module "ecr" {
+  source           = "../../modules/ecr"
+  project_name     = "student-mgmt"
+  repository_names = ["client", "server"]
+}
