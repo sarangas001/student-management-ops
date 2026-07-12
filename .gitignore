@@ -28,3 +28,9 @@ release/wi-kubernetes-manifests.yaml
 vendor/
 *.pem
 .terraform
+
+
+.env
+.env.development
+.env.production
+.env.local

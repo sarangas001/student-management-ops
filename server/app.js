@@ -31,6 +31,14 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+app.get("/api/health", (req, res) => {
+  const dbState = mongoose.connection.readyState; // 1 = connected
+  res.status(dbState === 1 ? 200 : 503).json({
+    status: dbState === 1 ? "ok" : "db_disconnected",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // ── Request parsing ───────────────────────────────────────────────────────────
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express.json({ limit: '10kb' }));
