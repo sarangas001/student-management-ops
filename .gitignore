@@ -34,3 +34,10 @@ vendor/
 .env.development
 .env.production
 .env.local
+
+.env
+.env.*
+server/.env.example
+client/.env.example
+client/.env
+k8s/base/server-secret.yaml
