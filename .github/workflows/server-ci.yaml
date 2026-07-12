@@ -1,0 +1,65 @@
+name: Server CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "server/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "server/**"
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    env:
+      IMAGE_NAME: student-mgmt/server
+      REGISTRY: localhost:4566
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./server
+        run: npm ci
+
+      - name: Run linter (තියෙනවා නම්)
+        working-directory: ./server
+        run: npm run lint --if-present
+
+      - name: Run tests (තියෙනවා නම්)
+        working-directory: ./server
+        run: npm test --if-present
+
+      - name: Generate image tag
+        id: vars
+        run: echo "TAG=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Authenticate to MiniStack ECR
+        run: |
+          aws ecr get-login-password --endpoint-url http://${{ env.REGISTRY }} --region us-east-1 | docker login --username AWS --password-stdin ${{ env.REGISTRY }}
+        env:
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+
+      - name: Build Docker image
+        working-directory: ./server
+        run: docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.TAG }} -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.TAG }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Load image into kind cluster
+        run: kind load docker-image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.TAG }} --name student-mgmt-cluster
