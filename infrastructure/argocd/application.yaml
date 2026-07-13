@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: student-mgmt
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/sarangas001/student-management-ops.git
+    targetRevision: main
+    path: k8s/base
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: student-mgmt
+
+  syncPolicy:
+    automated:
+      prune: true       # git එකෙන් resource එකක් අයින් උනොත්, cluster එකෙනුත් auto-delete කරනවා
+      selfHeal: true    # කවුරුහරි manually kubectl edit කළොත්, git state එකට auto-revert කරනවා
+    syncOptions:
+      - CreateNamespace=true
